@@ -10,10 +10,7 @@ import java.util.Comparator;
  *
  */
 public class Monom implements function{
-	/**
-	 * this class implements the interface function
-	 */
-	private static final long serialVersionUID = 1L;
+	
 	public static final Monom ZERO = new Monom(0,0);
 	public static final Monom MINUS1 = new Monom(-1,0);
 	public static final double EPSILON = 0.0000001;
@@ -113,7 +110,7 @@ public class Monom implements function{
 			if(s1.length==1 && s1[0].length()==1 && s1[0].charAt(0)==45)
 				Minuc_x_Case();// '-x' case
 
-			else if(s.length()==0 )
+			else if(s.charAt(0)==x.charAt(0))
 				Plus_x_Case();// '+x' case
 			else if(s1.length==1) {//if there is just a number with 'x' case
 				try {
