@@ -10,6 +10,10 @@ import java.util.Comparator;
  *
  */
 public class Monom implements function{
+	/**
+	 * this class implements the interface function
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final Monom ZERO = new Monom(0,0);
 	public static final Monom MINUS1 = new Monom(-1,0);
 	public static final double EPSILON = 0.0000001;
@@ -61,16 +65,24 @@ public class Monom implements function{
 	} 
 	public boolean isZero() {return this.get_coefficient() == 0;}
 
+	/**
+	 * this method gets the string and return's monom object from type function
+	 */
 	@Override
 	public function initFromString(String s) {
-		function newFunc= new Monom(s);	
-		return newFunc;
+		function newMononFunc= new Monom(s);	
+		return newMononFunc;
 	}
 
+	/**
+	 * this methos make's a cope of the monom
+	 */
 	@Override
 	public function copy() {
-		// TODO Auto-generated method stub
-		return null;
+		int powerTemp=this.get_power();
+		double coefficentTemp=this.get_coefficient();
+		function newMononFunc= new Monom(coefficentTemp,powerTemp);	
+		return newMononFunc;
 	}
 	// ***************** add your code below **********************
 	/**

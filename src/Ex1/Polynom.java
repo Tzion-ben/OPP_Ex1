@@ -262,7 +262,7 @@ public class Polynom implements Polynom_able{
 	 * this method make a deep copy of the polynom
 	 */
 	@Override
-	public Polynom_able copy() {
+	public function copy() {
 		Polynom newPlynom=new Polynom();
 		if(!this.polynom.get(0).isZero()) {
 			int powert=this.polynom.get(0).get_power();
@@ -276,7 +276,7 @@ public class Polynom implements Polynom_able{
 			Monom temp=new Monom (coefft,powert);
 			newPlynom.add(temp);
 		}
-		return newPlynom;
+		return (function)newPlynom;
 	}
 	/**
 	 * this methos is return a new polynom that he the derivative of this.polynom based on 
@@ -374,6 +374,12 @@ public class Polynom implements Polynom_able{
 		}
 		return ans;
 	}
+	
+	@Override
+	public function initFromString(String s) {
+		function polynomFunction=new Polynom(s);
+		return polynomFunction;
+	}
 	// ***************** My functions **********************
 	/**My functions that I decided that they important**/
 	/**
@@ -454,20 +460,7 @@ public class Polynom implements Polynom_able{
 		}
 		return flag;
 	}
-	public void addForCopy(Monom m1) {
-		if(this.polynom.size()==1 && this.polynom.get(0).get_coefficient()==0) {
-			boolean foo=differentPowers(m1);
-			if(!foo)
-				this.polynom.add(m1);
-		}
-		else {
-			boolean flag=false;
-			flag=differentPowers(m1);
-			if(!flag)
-				this.polynom.add(m1);
-			Collections.sort(this.polynom,new Monom_Comperator());
-		}
-	}
+
 	//****************** Private Methods and Data *****************
 
 	private void set_polynom(){
@@ -478,9 +471,4 @@ public class Polynom implements Polynom_able{
 	private ArrayList<Monom> polynom;//ArrayList that represents rhe polynom 
 	//that every place in it is a monom
 
-	@Override
-	public function initFromString(String s) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
