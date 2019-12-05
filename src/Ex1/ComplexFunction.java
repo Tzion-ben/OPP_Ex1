@@ -4,8 +4,20 @@ public class ComplexFunction implements complex_function{
 
 	@Override
 	public double f(double x) {
-		// TODO Auto-generated method stub
-		return 0;
+		Polynom p1 = new Polynom(this.resultOperationFunction.toString());
+		double fResult=p1.f(x);
+		if(this.operator==Operation.Divid) {
+			//if it is the devision then it's have to compute the tow functions and
+			//then 
+			Polynom pL=new Polynom(this.left.toString());
+			Polynom pR=new Polynom(this.right.toString());
+			double fResultLeft=pL.f(x);
+			double fResultRight=pR.f(x);
+			fResult=fResultLeft/fResultRight;
+			return fResult;
+		}
+		return fResult;
+
 	}
 
 	@Override
@@ -19,7 +31,11 @@ public class ComplexFunction implements complex_function{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	/**
+	 * this method gets the right function or a function from the main and
+	 * make an addition to the resultFunction that holds the left function
+	 * or the right and the left functions that was merged  
+	 */
 	@Override
 	public void plus(function f1) {
 		Polynom_able p1=new Polynom(f1.toString());
@@ -27,7 +43,11 @@ public class ComplexFunction implements complex_function{
 		p2.add(p1);
 		setResultOperationFunction(p2);
 	}
-
+	/**
+	 * this metod gets the right function or a function from the main and
+	 * multiply to the resultFunction that holds the left function
+	 * or the right and the left functions that was merged 
+	 */
 	@Override
 	public void mul(function f1) {
 		Polynom_able p1=new Polynom(f1.toString());
@@ -35,10 +55,28 @@ public class ComplexFunction implements complex_function{
 		p2.multiply(p1);
 		setResultOperationFunction(p2);
 	}
-
+	/**
+	 * 
+	 */
 	@Override
 	public void div(function f1) {
-		// TODO Auto-generated method stub
+
+		Polynom p1=new Polynom(f1.toString());
+		Polynom p2=new Polynom(this.resultOperationFunction.toString());
+		if(p1.equals(p2)) {
+			//if the functions is equal then the devision between them gut us 1
+			String one="1";
+			Polynom ans=new Polynom(one);
+			setResultOperationFunction(ans);
+		}// end if
+		try {
+			if(p1.isZero()) {//if the divaider is ZERE it is forbidden to divide 
+				throw new RuntimeException();
+			}
+		}
+		catch(Exception e) {
+			System.out.println("Division by ZERO is forbidden");
+		}
 
 	}
 
@@ -90,8 +128,10 @@ public class ComplexFunction implements complex_function{
 		setLeft(left);
 		setRight(right);
 		setOp(op);
-		setResultOperationFunction(left);
-		whatOperation();
+		setResultOperationFunction(left);//puting at the result of the oparation 
+		//automatically the left side and then make add or multiply or one of the operations
+		// between the functions
+		whatOperationToDo();
 	}
 	/**
 	 * a constructor just with the left Polynom, so the operation is None and the 
@@ -102,24 +142,23 @@ public class ComplexFunction implements complex_function{
 		setLeft(left);
 		setRight(null);
 		setResultOperationFunction(left);
-		Polynom p=new Polynom();
 		this.operator=Operation.None;
 	}
 
 	/**
-	 * 
+	 * checking what the operation the complex function have to do
 	 */
-	public void whatOperation () {
+	public void whatOperationToDo () {
 		switch (this.operator) {
-		case Plus:
 
-			plusLeftRight();break;
+		case Plus:
+			plus(this.right);break;
 
 		case Times:
-			mulLeftRight();break;
-			//
-			//		case Divid:
-			//			divLeftRight;break;
+			mul(this.right);break;
+
+		case Divid:
+			div(this.right);break;
 			//
 			//		case Max:
 			//			maxLeftRight;break;
@@ -133,20 +172,7 @@ public class ComplexFunction implements complex_function{
 		}
 	}
 
-	/**
-	 * sending the rigth side to the add it to the left side
-	 */
-	public void plusLeftRight() {
-		plus(this.right);}
-
-	/**
-	 * sending the rigth side to the add it to the left side
-	 */
-	public void mulLeftRight() {
-		mul(this.right);}
-
-
-	//****************** Sets the functions L&R *****************
+	//****************** Sets the functions L&R and the operation*****************
 
 	public void setLeft (function left) {
 		this.left=left;
