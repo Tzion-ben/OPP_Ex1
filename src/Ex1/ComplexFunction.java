@@ -4,19 +4,8 @@ public class ComplexFunction implements complex_function{
 
 	@Override
 	public double f(double x) {
-		Polynom p1 = new Polynom(this.resultOperationFunction.toString());
-		double fResult=p1.f(x);
-		if(this.operator==Operation.Divid) {
-			//if it is the devision then it's have to compute the tow functions and
-			//then 
-			Polynom pL=new Polynom(this.left.toString());
-			Polynom pR=new Polynom(this.right.toString());
-			double fResultLeft=pL.f(x);
-			double fResultRight=pR.f(x);
-			fResult=fResultLeft/fResultRight;
-			return fResult;
-		}
-		return fResult;
+
+		return x;
 
 	}
 
@@ -32,64 +21,67 @@ public class ComplexFunction implements complex_function{
 		return null;
 	}
 	/**
-	 * this method gets the right function or a function from the main and
-	 * make an addition to the resultFunction that holds the left function
-	 * or the right and the left functions that was merged  
+	 *this method put the this.rigth, and this.left to the left as a ComplexFunction
+	 *and changes the this.rigth to f1 and the this.oparation to Plus
 	 */
 	@Override
 	public void plus(function f1) {
-		Polynom_able p1=new Polynom(f1.toString());
-		Polynom_able p2=new Polynom(this.resultOperationFunction.toString());
-		p2.add(p1);
-		setResultOperationFunction(p2);
+		String op=whatOperationToDo();
+		ComplexFunction plusLR=new ComplexFunction(op,this.left,this.right);
+		this.left=plusLR;
+		this.right=f1;
+		this.operator=Operation.Plus;
 	}
 	/**
-	 * this metod gets the right function or a function from the main and
-	 * multiply to the resultFunction that holds the left function
-	 * or the right and the left functions that was merged 
+	 *this method put the this.rigth, and this.left to the left as a ComplexFunction
+	 *and changes the this.rigth to f1 and the this.oparation to Times
 	 */
 	@Override
 	public void mul(function f1) {
-		Polynom_able p1=new Polynom(f1.toString());
-		Polynom_able p2=new Polynom(this.resultOperationFunction.toString());
-		p2.multiply(p1);
-		setResultOperationFunction(p2);
+		String op=whatOperationToDo();
+		ComplexFunction mulLR=new ComplexFunction(op,this.left,this.right);
+		this.left=mulLR;
+		this.right=f1;
+		this.operator=Operation.Times;
 	}
+
 	/**
-	 * 
+	 *this method put the this.rigth, and this.left to the left as a ComplexFunction
+	 *and changes the this.rigth to f1 and the this.oparation to Divid
 	 */
 	@Override
 	public void div(function f1) {
-
-		Polynom p1=new Polynom(f1.toString());
-		Polynom p2=new Polynom(this.resultOperationFunction.toString());
-		if(p1.equals(p2)) {
-			//if the functions is equal then the devision between them gut us 1
-			String one="1";
-			Polynom ans=new Polynom(one);
-			setResultOperationFunction(ans);
-		}// end if
-		try {
-			if(p1.isZero()) {//if the divaider is ZERE it is forbidden to divide 
-				throw new RuntimeException();
-			}
-		}
-		catch(Exception e) {
-			System.out.println("Division by ZERO is forbidden");
-		}
-
+		String op=whatOperationToDo();
+		ComplexFunction divLR=new ComplexFunction(op,this.left,this.right);
+		this.left=divLR;
+		this.right=f1;
+		this.operator=Operation.Divid;
 	}
 
+	/**
+	 *this method put the this.rigth, and this.left to the left as a ComplexFunction
+	 *and changes the this.rigth to f1 and the this.oparation to Max
+	 */
 	@Override
 	public void max(function f1) {
-		// TODO Auto-generated method stub
-
+		String op=whatOperationToDo();
+		ComplexFunction maxLR=new ComplexFunction(op,this.left,this.right);
+		this.left=maxLR;
+		this.right=f1;
+		this.operator=Operation.Max;
 	}
 
+	/**
+	 *this method put the this.rigth, and this.left to the left as a ComplexFunction
+	 *and changes the this.rigth to f1 and the this.oparation to Min
+	 */
 	@Override
 	public void min(function f1) {
-		// TODO Auto-generated method stub
-
+		String op=whatOperationToDo();
+		ComplexFunction minLR=new ComplexFunction(op,this.left,this.right);
+		this.left=minLR;
+		this.right=f1;
+		this.operator=Operation.Min;
 	}
 
 	@Override
@@ -100,20 +92,17 @@ public class ComplexFunction implements complex_function{
 
 	@Override
 	public function left() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.left;		
 	}
 
 	@Override
 	public function right() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.right;
 	}
 
 	@Override
 	public Operation getOp() {
-
-		return null;
+		return this.operator;
 	}
 	// ***************** My functions **********************
 	/**My functions that I decided that they important**/
@@ -128,10 +117,6 @@ public class ComplexFunction implements complex_function{
 		setLeft(left);
 		setRight(right);
 		setOp(op);
-		setResultOperationFunction(left);//puting at the result of the oparation 
-		//automatically the left side and then make add or multiply or one of the operations
-		// between the functions
-		whatOperationToDo();
 	}
 	/**
 	 * a constructor just with the left Polynom, so the operation is None and the 
@@ -141,35 +126,35 @@ public class ComplexFunction implements complex_function{
 	public ComplexFunction (function left) {
 		setLeft(left);
 		setRight(null);
-		setResultOperationFunction(left);
 		this.operator=Operation.None;
 	}
 
 	/**
 	 * checking what the operation the complex function have to do
 	 */
-	public void whatOperationToDo () {
+	public String whatOperationToDo () {
 		switch (this.operator) {
 
 		case Plus:
-			plus(this.right);break;
+			return "plus";
 
 		case Times:
-			mul(this.right);break;
+			return "mul";
 
 		case Divid:
-			div(this.right);break;
-			//
-			//		case Max:
-			//			maxLeftRight;break;
-			//
-			//		case Min:
-			//			minLeftRight;break;
-			//
-			//		case Comp:
-			//			copmLeftRight;break;
-			//		}
+			return "div";
+
+		case Max:
+			return "max";
+
+		case Min:
+			return "min";
+
+		case Comp:
+			return "comp";
+
 		}
+		return "None";
 	}
 
 	//****************** Sets the functions L&R and the operation*****************
@@ -205,21 +190,12 @@ public class ComplexFunction implements complex_function{
 		default:
 			this.operator=Operation.Error;break;
 		}
-	}
-	/**
-	 * the function thet i gut after the operation, if it's just left function
-	 * then it equal to the left function
-	 * @param res
-	 */
-	public void setResultOperationFunction (function res) {
-		this.resultOperationFunction=res;
-	}
+	}//end setOp
 
 	//****************** Private Methods and Data *****************
 
 	private function left;
 	private function right;
-	private function resultOperationFunction;
 	private Operation operator;
 
 }
