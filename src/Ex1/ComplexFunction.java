@@ -1,10 +1,64 @@
 package Ex1;
 
+import javax.management.RuntimeErrorException;
+
 public class ComplexFunction implements complex_function{
 
 	@Override
 	public double f(double x) {
+		double leftSide;
+		double rigthSide;
+		double sumOfOperation;
 
+		switch (this.operator) {
+		case Plus:
+			leftSide=this.left.f(x);
+			rigthSide=this.rigth.f(x);
+			sumOfOperation=leftSide+rigthSide;
+			return sumOfOperation;
+
+		case Times:
+			leftSide=this.left.f(x);
+			rigthSide=this.rigth.f(x);
+			sumOfOperation=leftSide*rigthSide;
+			return sumOfOperation;
+
+		case Divid:
+			leftSide=this.left.f(x);
+			rigthSide=this.rigth.f(x);
+			if(this.rigth.f(x)!=0) {//because devision by zero is forbidden 
+				if(this.left.equals(this.rigth))
+					return 1;//if the functions are equal then the devision will equal
+				// to 1 every time
+				sumOfOperation=leftSide/rigthSide;
+				return sumOfOperation;				
+			}
+			else {//if it is devision by zero then throw an exception 
+				throw new RuntimeException();
+			}
+
+		case Max://returning the max side at the complex function
+			leftSide=this.left.f(x);
+			rigthSide=this.rigth.f(x);
+			if(leftSide>=rigthSide)
+				return leftSide;
+			else
+				return rigthSide;
+
+		case Min://returning the min side at the complex function
+			leftSide=this.left.f(x);
+			rigthSide=this.rigth.f(x);
+			if(leftSide<=rigthSide)
+				return leftSide;
+			else
+				return rigthSide;
+
+		case Comp:
+
+		case None:
+
+
+		}
 		return x;
 
 	}
@@ -15,13 +69,14 @@ public class ComplexFunction implements complex_function{
 		return null;
 	}
 
+	/**
+	 * this method make a copy of the ComplexFunction
+	 */
 	@Override
 	public function copy() {
 		String op=whatOperationToDo();
-		ComplexFunction originalLeft=new ComplexFunction(this.left);
-		ComplexFunction originalRigth=new ComplexFunction(this.rigth);
-		ComplexFunction toCopy=new ComplexFunction(op,originalLeft,originalRigth);	
-		return toCopy;
+		function ComplexFunctionToCopy=new ComplexFunction(op,this.left,this.rigth);	
+		return ComplexFunctionToCopy;
 	}
 	/**
 	 *this method put the this.rigth, and this.left to the left as a ComplexFunction
