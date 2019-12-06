@@ -17,8 +17,11 @@ public class ComplexFunction implements complex_function{
 
 	@Override
 	public function copy() {
-		// TODO Auto-generated method stub
-		return null;
+		String op=whatOperationToDo();
+		ComplexFunction originalLeft=new ComplexFunction(this.left);
+		ComplexFunction originalRigth=new ComplexFunction(this.rigth);
+		ComplexFunction toCopy=new ComplexFunction(op,originalLeft,originalRigth);	
+		return toCopy;
 	}
 	/**
 	 *this method put the this.rigth, and this.left to the left as a ComplexFunction
@@ -27,9 +30,9 @@ public class ComplexFunction implements complex_function{
 	@Override
 	public void plus(function f1) {
 		String op=whatOperationToDo();
-		ComplexFunction plusLR=new ComplexFunction(op,this.left,this.right);
+		ComplexFunction plusLR=new ComplexFunction(op,this.left,this.rigth);
 		this.left=plusLR;
-		this.right=f1;
+		this.rigth=f1;
 		this.operator=Operation.Plus;
 	}
 	/**
@@ -39,9 +42,9 @@ public class ComplexFunction implements complex_function{
 	@Override
 	public void mul(function f1) {
 		String op=whatOperationToDo();
-		ComplexFunction mulLR=new ComplexFunction(op,this.left,this.right);
+		ComplexFunction mulLR=new ComplexFunction(op,this.left,this.rigth);
 		this.left=mulLR;
-		this.right=f1;
+		this.rigth=f1;
 		this.operator=Operation.Times;
 	}
 
@@ -52,9 +55,9 @@ public class ComplexFunction implements complex_function{
 	@Override
 	public void div(function f1) {
 		String op=whatOperationToDo();
-		ComplexFunction divLR=new ComplexFunction(op,this.left,this.right);
+		ComplexFunction divLR=new ComplexFunction(op,this.left,this.rigth);
 		this.left=divLR;
-		this.right=f1;
+		this.rigth=f1;
 		this.operator=Operation.Divid;
 	}
 
@@ -65,9 +68,9 @@ public class ComplexFunction implements complex_function{
 	@Override
 	public void max(function f1) {
 		String op=whatOperationToDo();
-		ComplexFunction maxLR=new ComplexFunction(op,this.left,this.right);
+		ComplexFunction maxLR=new ComplexFunction(op,this.left,this.rigth);
 		this.left=maxLR;
-		this.right=f1;
+		this.rigth=f1;
 		this.operator=Operation.Max;
 	}
 
@@ -78,16 +81,23 @@ public class ComplexFunction implements complex_function{
 	@Override
 	public void min(function f1) {
 		String op=whatOperationToDo();
-		ComplexFunction minLR=new ComplexFunction(op,this.left,this.right);
+		ComplexFunction minLR=new ComplexFunction(op,this.left,this.rigth);
 		this.left=minLR;
-		this.right=f1;
+		this.rigth=f1;
 		this.operator=Operation.Min;
 	}
 
+	/**
+	 *this method put the this.rigth, and this.left to the left as a ComplexFunction
+	 *and changes the this.rigth to f1 and the this.oparation to Comp
+	 */
 	@Override
 	public void comp(function f1) {
-		// TODO Auto-generated method stub
-
+		String op=whatOperationToDo();
+		ComplexFunction compLR=new ComplexFunction(op,this.left,this.rigth);
+		this.left=compLR;
+		this.rigth=f1;
+		this.operator=Operation.Comp;
 	}
 
 	@Override
@@ -97,7 +107,7 @@ public class ComplexFunction implements complex_function{
 
 	@Override
 	public function right() {
-		return this.right;
+		return this.rigth;
 	}
 
 	@Override
@@ -113,9 +123,9 @@ public class ComplexFunction implements complex_function{
 	 * @param left
 	 * @param right
 	 */
-	public ComplexFunction (String op,function left, function right) {
+	public ComplexFunction (String op,function left, function rigth) {
 		setLeft(left);
-		setRight(right);
+		setRight(rigth);
 		setOp(op);
 	}
 	/**
@@ -164,7 +174,7 @@ public class ComplexFunction implements complex_function{
 	}
 
 	public void setRight (function right) {
-		this.right=right;
+		this.rigth=right;
 	}
 
 	public void setOp(String op) {
@@ -195,7 +205,7 @@ public class ComplexFunction implements complex_function{
 	//****************** Private Methods and Data *****************
 
 	private function left;
-	private function right;
+	private function rigth;
 	private Operation operator;
 
 }
