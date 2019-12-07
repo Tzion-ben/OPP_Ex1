@@ -3,64 +3,70 @@ package Ex1;
 import javax.management.RuntimeErrorException;
 
 public class ComplexFunction implements complex_function{
-
+	/**
+	 * this method will calculate the f of the complex function at x that
+	 * i will gave him in different oparation , depend on what oparation i will
+	 * sent to it
+	 */
 	@Override
 	public double f(double x) {
 		double leftSide;
 		double rigthSide;
-		double sumOfOperation;
+		double sumOfOperation=0;;
 
 		switch (this.operator) {
 		case Plus:
 			leftSide=this.left.f(x);
 			rigthSide=this.rigth.f(x);
-			sumOfOperation=leftSide+rigthSide;
-			return sumOfOperation;
+			sumOfOperation=leftSide+rigthSide;break;
 
 		case Times:
 			leftSide=this.left.f(x);
 			rigthSide=this.rigth.f(x);
-			sumOfOperation=leftSide*rigthSide;
-			return sumOfOperation;
+			sumOfOperation=leftSide*rigthSide;break;
 
 		case Divid:
 			leftSide=this.left.f(x);
 			rigthSide=this.rigth.f(x);
 			if(this.rigth.f(x)!=0) {//because devision by zero is forbidden 
-				if(this.left.equals(this.rigth))
-					return 1;//if the functions are equal then the devision will equal
-				// to 1 every time
-				sumOfOperation=leftSide/rigthSide;
-				return sumOfOperation;				
+				if(this.left.equals(this.rigth)) {
+					sumOfOperation= 1;
+					break;
+					//if the functions are equal then the devision will equal
+					// to 1 every time
+				}
+				sumOfOperation=leftSide/rigthSide;break;			
 			}
-			else {//if it is devision by zero then throw an exception 
+			else //if it is devision by zero then throw an exception 
 				throw new RuntimeException();
-			}
 
 		case Max://returning the max side at the complex function
 			leftSide=this.left.f(x);
 			rigthSide=this.rigth.f(x);
 			if(leftSide>=rigthSide)
-				return leftSide;
+				sumOfOperation=leftSide;
 			else
-				return rigthSide;
+				sumOfOperation=rigthSide;
+			break;
 
 		case Min://returning the min side at the complex function
 			leftSide=this.left.f(x);
 			rigthSide=this.rigth.f(x);
 			if(leftSide<=rigthSide)
-				return leftSide;
+				sumOfOperation=leftSide;
 			else
-				return rigthSide;
+				sumOfOperation=rigthSide;
+			break;
 
 		case Comp:
+			rigthSide=this.rigth.f(x);
+			leftSide=this.left.f(rigthSide);
+			sumOfOperation=leftSide;break;
 
 		case None:
-
-
+			sumOfOperation=this.left.f(x);break;
 		}
-		return x;
-
+		return sumOfOperation;
 	}
 
 	@Override
