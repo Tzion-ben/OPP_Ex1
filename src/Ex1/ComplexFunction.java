@@ -1,7 +1,5 @@
 package Ex1;
 
-import javax.management.RuntimeErrorException;
-
 public class ComplexFunction implements complex_function{
 	/**
 	 * this method will calculate the f of the complex function at x that
@@ -69,10 +67,65 @@ public class ComplexFunction implements complex_function{
 		return sumOfOperation;
 	}
 
+	/**
+	 * this method gets a string and make a complex function recursively
+	 */
 	@Override
 	public function initFromString(String s) {
-		// TODO Auto-generated method stub
-		return null;
+		int i=0;
+		while(s.charAt(i)!='(') //runs until it : (
+			i++;
+
+		int j=s.length()-1;
+		while(s.charAt(j)!=')')//and from the other side runs until it : )
+			j--;
+
+		String tempString=s.substring(i+1, j);
+		String [] tempSpilit =tempString.split(",");
+		String op="";
+		if(s.charAt(0)>96&&s.charAt(0)<123)//if it's immediately the operation
+			op=s.substring(0, i);
+		else {//if before the operation it contains function
+			  //so then run at while loop until its' just the operation
+			int k=0;
+			while((s.charAt(k)<97||s.charAt(k)>122)||(s.charAt(k)==120)) 
+				k++;
+			op=s.substring(k,i);
+		}
+
+		boolean leftSideComp=isFunction(tempSpilit[0]);
+		boolean rigthSideComp=isFunction(tempSpilit[1]);
+		int x=2;
+		while((!leftSideComp&&!rigthSideComp)&&(x<tempString.length())) {
+			if(x%2==0)//because the left side is on the even index at the array after the split
+				leftSideComp=isFunction(tempSpilit[x]);
+			else
+				rigthSideComp=isFunction(tempSpilit[x]);
+			x++;
+		}
+		if(x>=2) {
+			if(leftSideComp)
+				x=x-2;
+			else if (rigthSideComp)
+				x--;
+		}
+		if(leftSideComp&&rigthSideComp) {//works when it got to the last deep part of the string 
+			function leftSide=new Polynom(tempSpilit[0]);
+			function rigthSide = new Polynom(tempSpilit[1]);
+			//ComplexFunction ComplexFunctionNew=new ComplexFunction(op,leftSide,rigthSide);
+			return new ComplexFunction(op,leftSide,rigthSide);
+		}
+		if(!leftSideComp&&rigthSideComp) {//the right side is can be a function
+			function rigthSide = new Polynom(tempSpilit[x]);
+			return new ComplexFunction(op,initFromString(tempString),rigthSide);
+		}
+		if(leftSideComp&&!rigthSideComp) {//the left side is can be a function
+			function leftSide=new Polynom(tempSpilit[x]);
+			return new ComplexFunction(op,leftSide,initFromString(tempString));
+		}
+
+		return null;//it's null because the method can't be without a return, so i put 
+		//null because i not need it
 	}
 
 	/**
@@ -81,7 +134,7 @@ public class ComplexFunction implements complex_function{
 	@Override
 	public function copy() {
 		String op=whatOperationToDo();
-		function ComplexFunctionToCopy=new ComplexFunction(op,this.left,this.rigth);	
+		ComplexFunction ComplexFunctionToCopy=new ComplexFunction(op,this.left,this.rigth);	
 		return ComplexFunctionToCopy;
 	}
 	/**
@@ -228,6 +281,31 @@ public class ComplexFunction implements complex_function{
 		return "None";
 	}
 
+	/**
+	 * this method checking if the string is can be at the future function 
+	 * @param s
+	 * @return
+	 */
+	public boolean isFunction (String s) {
+		boolean flag =true;
+		//1.
+		if(s.length()==0) {
+			flag=false;
+			return flag;
+		}//end 1.
+		//2.
+		for (int i = 0; i < s.length(); i++) {
+			int temp=s.charAt(i);
+			if(temp<48||temp>57) {//it's not a digit , check it with aski code
+				//the it's can be only 'x' or:'^' ,or:'-' ,or:'.'
+				if(temp!=120&&temp!=94&&temp!=45&&temp!=46&&temp!=43) {
+					flag=false;
+					return flag;
+				}					
+			}
+		}//end 2.
+		return flag;
+	}
 	//****************** Sets the functions L&R and the operation*****************
 
 	public void setLeft (function left) {

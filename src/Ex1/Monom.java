@@ -110,8 +110,9 @@ public class Monom implements function{
 			if(s1.length==1 && s1[0].length()==1 && s1[0].charAt(0)==45)
 				Minuc_x_Case();// '-x' case
 
-			else if(s.charAt(0)==x.charAt(0))
+			else if(s.charAt(0)==x.charAt(0)&&s.length()==1)	
 				Plus_x_Case();// '+x' case
+			
 			else if(s1.length==1) {//if there is just a number with 'x' case
 				try {
 					coefficient=coefficient(s1[0]);}
