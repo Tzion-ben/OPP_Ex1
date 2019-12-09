@@ -39,13 +39,13 @@ public class Polynom implements Polynom_able{
 	 */
 
 	public Polynom(String s) {
-		//try {
-		boolean flag=courect_polynom(s);
+		String afterRMSpace=rmSpace(s);
+		boolean flag=courect_polynom(afterRMSpace);
 		if(!flag)
 			throw new RuntimeException();
 		else {
 			set_polynom();
-			peruk_to_monoms(s);
+			peruk_to_monoms(afterRMSpace);
 		}
 	}
 	/**
@@ -461,6 +461,19 @@ public class Polynom implements Polynom_able{
 		return flag;
 	}
 
+	/**
+	 * this method removing all the spaces at giving string
+	 * @param s
+	 * @return
+	 */
+	public String rmSpace(String s) {
+		String ans="";
+		String [] splitSpace=s.split(" ");
+		for(int i=0;i<splitSpace.length;i++) {
+			ans=ans+splitSpace[i];
+		}
+		return ans;
+	}
 	//****************** Private Methods and Data *****************
 
 	private void set_polynom(){

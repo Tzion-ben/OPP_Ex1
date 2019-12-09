@@ -26,13 +26,7 @@ public class ComplexFunction implements complex_function{
 		case Divid:
 			leftSide=this.left.f(x);
 			rigthSide=this.rigth.f(x);
-			if(this.rigth.f(x)!=0) {//because devision by zero is forbidden 
-				if(this.left.equals(this.rigth)) {
-					sumOfOperation= 1;
-					break;
-					//if the functions are equal then the devision will equal
-					// to 1 every time
-				}
+			if(rigthSide!=0) {//because devision by zero is forbidden 
 				sumOfOperation=leftSide/rigthSide;break;			
 			}
 			else //if it is devision by zero then throw an exception 
@@ -72,6 +66,15 @@ public class ComplexFunction implements complex_function{
 	 */
 	@Override
 	public function initFromString(String s) {
+		boolean leftSideComp;
+		boolean rigthSideComp;
+		//if the string is just a left function and nothing else
+		leftSideComp=isFunction(s);
+		if(leftSideComp){
+			function leftSide=new Polynom(s);
+			return new ComplexFunction(leftSide);
+		}	
+		//if the string is left and right and more functions
 		int i=0;
 		while(s.charAt(i)!='(') //runs until it : (
 			i++;
@@ -82,19 +85,26 @@ public class ComplexFunction implements complex_function{
 
 		String tempString=s.substring(i+1, j);
 		String [] tempSpilit =tempString.split(",");
+
+		for(int g=1;g<tempSpilit.length-1;g++) {
+			//checking it there is  ) after spliting and clean them
+			int toCutparenthesis=tempSpilit[g].length();
+			if(tempSpilit[g].contains(")"))
+				tempSpilit[g]=tempSpilit[g].substring(0, toCutparenthesis-1);
+		}//end for
 		String op="";
 		if(s.charAt(0)>96&&s.charAt(0)<123)//if it's immediately the operation
 			op=s.substring(0, i);
 		else {//if before the operation it contains function
-			  //so then run at while loop until its' just the operation
+			//so then run at while loop until its' just the operation
 			int k=0;
 			while((s.charAt(k)<97||s.charAt(k)>122)||(s.charAt(k)==120)) 
 				k++;
 			op=s.substring(k,i);
 		}
 
-		boolean leftSideComp=isFunction(tempSpilit[0]);
-		boolean rigthSideComp=isFunction(tempSpilit[1]);
+		leftSideComp=isFunction(tempSpilit[0]);
+		rigthSideComp=isFunction(tempSpilit[1]);
 		int x=2;
 		while((!leftSideComp&&!rigthSideComp)&&(x<tempString.length())) {
 			if(x%2==0)//because the left side is on the even index at the array after the split
@@ -103,7 +113,7 @@ public class ComplexFunction implements complex_function{
 				rigthSideComp=isFunction(tempSpilit[x]);
 			x++;
 		}
-		if(x>=2) {
+		if(x>=2) {//if the array of the string after the spliting is bigger then 2
 			if(leftSideComp)
 				x=x-2;
 			else if (rigthSideComp)
@@ -112,7 +122,6 @@ public class ComplexFunction implements complex_function{
 		if(leftSideComp&&rigthSideComp) {//works when it got to the last deep part of the string 
 			function leftSide=new Polynom(tempSpilit[0]);
 			function rigthSide = new Polynom(tempSpilit[1]);
-			//ComplexFunction ComplexFunctionNew=new ComplexFunction(op,leftSide,rigthSide);
 			return new ComplexFunction(op,leftSide,rigthSide);
 		}
 		if(!leftSideComp&&rigthSideComp) {//the right side is can be a function
@@ -129,7 +138,51 @@ public class ComplexFunction implements complex_function{
 	}
 
 	/**
-	 * this method make a copy of the ComplexFunction
+	 * 
+	 */
+	@Override	
+	public String toString() {
+		if(this.operator==Operation.None)
+		{
+			String ans="";
+			ans=this.left.toString();
+			return ans;
+		}
+		String op=whatOperationToDo();
+		String ans=op+"(";
+		ans=ans+toStringLeft();
+		ans=ans+","+toStringRight();
+		return ans;
+	}
+
+	/**
+	 * 
+	 * @returns
+	 */
+	public String toStringLeft() {
+		String ans="";
+		while(this.left instanceof Polynom) {
+			ans=ans+this.left.toString();
+			return ans;	
+		}
+		return this.left.toString();
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public String toStringRight() {
+		String ans="";
+		while(this.rigth instanceof Polynom) {
+			String op=whatOperationToDo();
+			ans=ans+this.rigth.toString()+")";
+			return ans;
+		}
+		return this.rigth.toString();	
+	}
+
+	/**
+	 * this method make a deep copy of the ComplexFunction
 	 */
 	@Override
 	public function copy() {
@@ -257,7 +310,7 @@ public class ComplexFunction implements complex_function{
 	 * checking what the operation the complex function have to do
 	 */
 	public String whatOperationToDo () {
-		switch (this.operator) {
+		switch (this.operator) {//for the error there is no need a case
 
 		case Plus:
 			return "plus";
@@ -298,7 +351,7 @@ public class ComplexFunction implements complex_function{
 			int temp=s.charAt(i);
 			if(temp<48||temp>57) {//it's not a digit , check it with aski code
 				//the it's can be only 'x' or:'^' ,or:'-' ,or:'.'
-				if(temp!=120&&temp!=94&&temp!=45&&temp!=46&&temp!=43) {
+				if(temp!=120&&temp!=94&&temp!=45&&temp!=46&&temp!=43&&temp!=' ') {
 					flag=false;
 					return flag;
 				}					
@@ -346,5 +399,4 @@ public class ComplexFunction implements complex_function{
 	private function left;
 	private function rigth;
 	private Operation operator;
-
 }

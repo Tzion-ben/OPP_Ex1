@@ -203,8 +203,7 @@ public class Monom implements function{
 				throw new RuntimeException();
 		}
 		catch(  RuntimeException e) {
-			//System.out.println("EER : The powers are diffrent so it's forbiden to "
-			//+ "add the monoms ");
+		
 		}
 	}//end add
 	/**
@@ -225,6 +224,7 @@ public class Monom implements function{
 			this.set_power(0);
 		}
 	}//end multipy
+	
 	/**
 	 * this method return's a string of the monom
 	 */
@@ -264,9 +264,11 @@ public class Monom implements function{
 		}
 		return ans;
 	}//end toString
+	
 	// you may (always) add other methods.
 	// ***************** My functions **********************
 	/**My functions that I decided that they important**/
+	
 	/**
 	 * this method is checking if at the monom there is nothing then digits 
 	 * and : 'x', '+', '-' ,'.' ,'^' and if not returns false
@@ -292,6 +294,7 @@ public class Monom implements function{
 		}//end 2.
 		return flag;
 	}
+	
 	/**
 	 * this method is checking if the monoms are equal until EPSILON
 	 * it means that monom with coefficent 2.9999999999 is equal to 
