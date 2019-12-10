@@ -1,7 +1,9 @@
 package Ex1;
 
+import java.util.Iterator;
+
 public class ComplexFunction implements complex_function{
-	/**
+	/**  
 	 * this method will calculate the f of the complex function at x that
 	 * i will gave him in different oparation , depend on what oparation i will
 	 * sent to it
@@ -138,12 +140,13 @@ public class ComplexFunction implements complex_function{
 	}
 
 	/**
-	 * 
+	 * this metod merge the right and the left side together to one string 
 	 */
 	@Override	
 	public String toString() {
 		if(this.operator==Operation.None)
 		{
+			//this if is if the fuction have just a left side
 			String ans="";
 			ans=this.left.toString();
 			return ans;
@@ -155,8 +158,10 @@ public class ComplexFunction implements complex_function{
 		return ans;
 	}
 
+
 	/**
-	 * 
+	 * this metod returns the left string from the left side of the string
+	 * recursively
 	 * @returns
 	 */
 	public String toStringLeft() {
@@ -168,7 +173,8 @@ public class ComplexFunction implements complex_function{
 		return this.left.toString();
 	}
 	/**
-	 * 
+	 * this metod returns the right string from the right side of the string
+	 * recursively
 	 * @return
 	 */
 	public String toStringRight() {
@@ -189,6 +195,31 @@ public class ComplexFunction implements complex_function{
 		String op=whatOperationToDo();
 		ComplexFunction ComplexFunctionToCopy=new ComplexFunction(op,this.left,this.rigth);	
 		return ComplexFunctionToCopy;
+	}
+
+	/**
+	 * this methos is checkimg if two Complec Functions are equal or not
+	 * at range -2000 to 2000 because we can't make a comparison between toe complex function 
+	 * we not have a way to compare something like for example x^2/x and x, so i compare 
+	 * the f(x) of the two Complex Functions , but we can't say that thay realy equal because 
+	 * we need to compare all the numbers until infinity and it's effective, so we compare
+	 * a some range and for that range they equal
+	 */
+	public boolean equals(Object cf) {
+		boolean flag=true;
+		if(cf!=null&&cf instanceof ComplexFunction){
+			for(int x=-2000;x<=2000;x++) {
+				ComplexFunction tempThis=new ComplexFunction(this.operator,this.left,this.rigth);
+				double fXthis=Math.abs(tempThis.f(x));
+				ComplexFunction tempCf=(ComplexFunction)cf;
+				double fXcf=tempCf.f(x);
+				if (fXthis!=(Math.abs(fXcf))) {
+					flag=false;
+					return flag;
+				}
+			}
+		}
+		return flag;	
 	}
 	/**
 	 *this method put the this.rigth, and this.left to the left as a ComplexFunction
@@ -293,7 +324,20 @@ public class ComplexFunction implements complex_function{
 	public ComplexFunction (String op,function left, function rigth) {
 		setLeft(left);
 		setRight(rigth);
-		setOp(op);
+		setOpFromString(op);
+	}
+
+	/**
+	 * Contractor for the ComplexFunction from toe polynoms and Operation that
+	 * represents an operator
+	 * @param op
+	 * @param left
+	 * @param rigth
+	 */
+	public ComplexFunction (Operation op,function left, function rigth) {
+		setLeft(left);
+		setRight(rigth);
+		this.operator=op;
 	}
 	/**
 	 * a constructor just with the left Polynom, so the operation is None and the 
@@ -369,7 +413,7 @@ public class ComplexFunction implements complex_function{
 		this.rigth=right;
 	}
 
-	public void setOp(String op) {
+	public void setOpFromString(String op) {
 		switch (op) {
 		case "plus":
 			this.operator=Operation.Plus;break;
