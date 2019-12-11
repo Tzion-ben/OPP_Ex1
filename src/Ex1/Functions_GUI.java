@@ -84,20 +84,28 @@ public class Functions_GUI implements functions {
 
 	@Override
 	public void initFromFile(String file) throws IOException {
+		set_functionsList();
 		FileReader functions = new FileReader(file);
 		BufferedReader brFunctions = new BufferedReader(functions); 
 		String functionsFromFile="";
 		String tempToRead;
+		int countOfLInes=0;
 		tempToRead=brFunctions.readLine();
+		ComplexFunction newCF=new ComplexFunction(new Monom(1,1));
 		while(tempToRead!=null) {
-			functionsFromFile=functionsFromFile+tempToRead;
+			function newFunction;
+			if(tempToRead.length()!=0) {
+				newFunction = newCF.initFromString(tempToRead);
+				functionsList.add(newFunction);
+			}
+			functionsFromFile=functionsFromFile+" "+tempToRead;
 			tempToRead=brFunctions.readLine();
+
 		}
-		System.out.println("The file string is : " +functionsFromFile);
+		System.out.println("countOfLInes :"+countOfLInes);
+		System.out.println("The file string is:"+functionsFromFile);
 		brFunctions.close();
 		functions.close();
-
-
 	}
 
 	@Override
@@ -120,9 +128,9 @@ public class Functions_GUI implements functions {
 
 	// ***************** My functions **********************
 	/**My functions that I decided that they important**/
-	
+
 	/**
-	 * this metod counting if the numbers of parenthesis at the string is currect or not
+	 * this method counting if the numbers of parenthesis at the string is correct or not
 	 * @param s
 	 * @return
 	 */

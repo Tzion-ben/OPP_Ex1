@@ -1,7 +1,5 @@
 package Ex1;
 
-import java.util.Iterator;
-
 public class ComplexFunction implements complex_function{
 	/**  
 	 * this method will calculate the f of the complex function at x that
@@ -76,68 +74,59 @@ public class ComplexFunction implements complex_function{
 			function leftSide=new Polynom(s);
 			return new ComplexFunction(leftSide);
 		}	
-		//if the string is left and right and more functions
-		int i=0;
-		while(s.charAt(i)!='(') //runs until it : (
-			i++;
-
-		int j=s.length()-1;
-		while(s.charAt(j)!=')')//and from the other side runs until it : )
-			j--;
-
-		String tempString=s.substring(i+1, j);
-		String [] tempSpilit =tempString.split(",");
-
-		for(int g=1;g<tempSpilit.length-1;g++) {
-			//checking it there is  ) after spliting and clean them
-			int toCutparenthesis=tempSpilit[g].length();
-			if(tempSpilit[g].contains(")"))
-				tempSpilit[g]=tempSpilit[g].substring(0, toCutparenthesis-1);
-		}//end for
-		String op="";
-		if(s.charAt(0)>96&&s.charAt(0)<123)//if it's immediately the operation
-			op=s.substring(0, i);
-		else {//if before the operation it contains function
-			//so then run at while loop until its' just the operation
-			int k=0;
-			while((s.charAt(k)<97||s.charAt(k)>122)||(s.charAt(k)==120)) 
-				k++;
-			op=s.substring(k,i);
+		//else :
+		//counting if there is just one open and closes scops
+		//because it is the stop of the recursion
+		int j=0,countPoteh=0;
+		while(j<s.length()) { 
+			if(s.charAt(j)=='(') 
+				countPoteh++;
+			j++;
+			if(countPoteh>1)
+				break;
+			//if there is more then one open scoop it's can go out because 
+			//if have to be only one to stop the recursion
+		}
+		if(countPoteh==1) {
+			int i=0;
+			while((s.charAt(i)!='(')&&(i<s.length()))
+				i++;
+			String op=s.substring(0, i);
+			s=s.substring(i+1, s.length()-1);//the string without the op  the soups
+			String withOutOP []=s.split(",");
+			leftSideComp=isFunction(withOutOP[0]);
+			rigthSideComp=isFunction(withOutOP[1]);
+			if(leftSideComp&&rigthSideComp) {
+				function leftSide=new Polynom(withOutOP[0]);
+				function rigthSide = new Polynom(withOutOP[1]);
+				return new ComplexFunction(op,leftSide,rigthSide);
+			}
 		}
 
-		leftSideComp=isFunction(tempSpilit[0]);
-		rigthSideComp=isFunction(tempSpilit[1]);
-		int x=2;
-		while((!leftSideComp&&!rigthSideComp)&&(x<tempString.length())) {
-			if(x%2==0)//because the left side is on the even index at the array after the split
-				leftSideComp=isFunction(tempSpilit[x]);
-			else
-				rigthSideComp=isFunction(tempSpilit[x]);
-			x++;
-		}
-		if(x>=2) {//if the array of the string after the spliting is bigger then 2
-			if(leftSideComp)
-				x=x-2;
-			else if (rigthSideComp)
-				x--;
-		}
-		if(leftSideComp&&rigthSideComp) {//works when it got to the last deep part of the string 
-			function leftSide=new Polynom(tempSpilit[0]);
-			function rigthSide = new Polynom(tempSpilit[1]);
-			return new ComplexFunction(op,leftSide,rigthSide);
-		}
-		if(!leftSideComp&&rigthSideComp) {//the right side is can be a function
-			function rigthSide = new Polynom(tempSpilit[x]);
-			return new ComplexFunction(op,initFromString(tempString),rigthSide);
-		}
-		if(leftSideComp&&!rigthSideComp) {//the left side is can be a function
-			function leftSide=new Polynom(tempSpilit[x]);
-			return new ComplexFunction(op,leftSide,initFromString(tempString));
-		}
+		countPoteh=0;
+		int k=0,p=0;
+		while((s.charAt(k)!='(')&&(k<s.length())) 
+			k++;
+		String op=s.substring(0, k);
 
-		return null;//it's null because the method can't be without a return, so i put 
-		//null because i not need it
-	}
+		s=s.substring(k+1, s.length()-1);//the string without the op  the soups
+		int flag=countScoups(s);
+		if(flag==-1)
+			throw new RuntimeException();
+		if(flag+1==s.length()) 
+			while((s.charAt(p)!=',')) 
+				p++;
+		else 
+			p=flag+1;
+		String withOutOP []=new String [2];
+		withOutOP[0]=s.substring(0, p);
+		withOutOP[1]=s.substring(p+1);
+
+		leftSideComp=isFunction(withOutOP[0]);
+		rigthSideComp=isFunction(withOutOP[1]);
+		return new ComplexFunction(op,initFromString(withOutOP[0]),
+				initFromString(withOutOP[1]));
+	}//end of initFromStrong
 
 	/**
 	 * this metod merge the right and the left side together to one string 
@@ -155,10 +144,9 @@ public class ComplexFunction implements complex_function{
 		String ans=op+"(";
 		ans=ans+toStringLeft();
 		ans=ans+","+toStringRight();
+		ans=ans+")";
 		return ans;
 	}
-
-
 	/**
 	 * this metod returns the left string from the left side of the string
 	 * recursively
@@ -180,8 +168,7 @@ public class ComplexFunction implements complex_function{
 	public String toStringRight() {
 		String ans="";
 		while(this.rigth instanceof Polynom) {
-			String op=whatOperationToDo();
-			ans=ans+this.rigth.toString()+")";
+			ans=ans+this.rigth.toString();
 			return ans;
 		}
 		return this.rigth.toString();	
@@ -337,7 +324,10 @@ public class ComplexFunction implements complex_function{
 	public ComplexFunction (Operation op,function left, function rigth) {
 		setLeft(left);
 		setRight(rigth);
+		if(op==Operation.Error)
+			throw new RuntimeException();
 		this.operator=op;
+		 
 	}
 	/**
 	 * a constructor just with the left Polynom, so the operation is None and the 
@@ -403,6 +393,32 @@ public class ComplexFunction implements complex_function{
 		}//end 2.
 		return flag;
 	}
+
+	/**
+	 * this method checking if the number of scopes at the string us correct, 
+	 * and if it's does so return the place of the last close scoop
+	 * and if not returns -1
+	 * @param s
+	 * @return
+	 */
+	public int countScoups (String s) {
+		int flag=-1;
+		int count=0;
+		for(int i=0;i<s.length();i++) {
+			if(s.charAt(i)=='(')
+				count++;
+			if(s.charAt(i)==')') {
+				count--;
+				if(count==0) {
+					flag=i;//the place of the last scoop
+					return flag;
+				}
+			}
+		}
+
+		return flag;
+	}
+	
 	//****************** Sets the functions L&R and the operation*****************
 
 	public void setLeft (function left) {
@@ -434,7 +450,8 @@ public class ComplexFunction implements complex_function{
 			this.operator=Operation.Comp;break;
 
 		default:
-			this.operator=Operation.Error;break;
+			this.operator=Operation.Error;
+			throw new RuntimeException();
 		}
 	}//end setOp
 
