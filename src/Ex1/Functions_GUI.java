@@ -3,15 +3,21 @@ package Ex1;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import Ex1.StdDraw;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class Functions_GUI implements functions {
 
@@ -171,8 +177,8 @@ public class Functions_GUI implements functions {
 			StdDraw.line(x[i], ry.get_min(), x[i], ry.get_max());
 		}
 
-		
-		
+
+
 		// plot the approximation to the function
 		for(int a=0;a<size;a++) {
 			int c = a%Colors.length;
@@ -187,7 +193,48 @@ public class Functions_GUI implements functions {
 
 	@Override
 	public void drawFunctions(String json_file) {
-		
+		Object obj = null;
+		try {
+			JsonParser jp = new JsonParser();
+			FileReader fr = new FileReader(json_file);
+			obj = jp.parse(fr);
+			//obj = new JSONParser().parse(new FileReader(fileName));
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		} 
+		JsonObject jo = (JsonObject) obj;
+
+		// getting firstName and lastName 
+		JsonElement WidthJson =  jo.get("Width");
+		int width=WidthJson.getAsInt();
+
+		JsonElement HeightJson =  jo.get("Height");
+		int height=HeightJson.getAsInt();
+
+		JsonElement ResolutionJson =  jo.get("Resolution");
+		int resolution=ResolutionJson.getAsInt();
+
+
+		JsonElement ryJson =  jo.get("Range_Y");
+		JsonArray ry=ryJson.getAsJsonArray();
+		JsonElement minRyJson=ry.get(0);
+		JsonElement maxRyJson=ry.get(1);
+		double ryMin=minRyJson.getAsDouble();
+		double ryMax=maxRyJson.getAsDouble();
+		Range ryRange=new Range(ryMin, ryMax);
+
+		JsonElement rxJson =  jo.get("Range_X");
+		JsonArray rx=rxJson.getAsJsonArray();
+		JsonElement minRxJson=rx.get(0);
+		JsonElement maxRxJson=rx.get(1);
+		double rxMin=minRxJson.getAsDouble();
+		double rxMax=maxRxJson.getAsDouble();
+		Range rxRange=new Range(rxMin, rxMax);
+
+
+		//sending the paramiters to the 
+		drawFunctions(width, height, rxRange, ryRange, resolution);
 
 	}
 
