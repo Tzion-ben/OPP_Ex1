@@ -311,7 +311,7 @@ public class Monom implements function{
 			}
 			else {
 				if(Math.abs(this.get_coefficient()- m.get_coefficient())<=EPSILON)
-					if(this.get_power()==this.get_power())
+					if(this.get_power()==m.get_power())
 						return true;
 			}
 		}

@@ -83,7 +83,7 @@ public class meTemptest {
 		Range rx = new Range(-10,10);
 		Range ry = new Range(-5,15);
 
-		a.drawFunctions(1000,600,rx,ry,res);
+		//a.drawFunctions(1000,600,rx,ry,res);
 		a.drawFunctions("GUI_params.txt");
 		
 

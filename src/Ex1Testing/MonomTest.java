@@ -1,4 +1,4 @@
-package Ex1;
+package Ex1Testing;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,12 +7,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import Ex1.*;
+public class MonomTest {
 
-class MonomJunitTest {
-
-	private Monom m, m1 ,m2,m3,m4,m5,m6,m7,m8;
-	@BeforeAll
-	void setUpBeforeAll() throws Exception {
+	private   Monom m, m1 ,m2,m3,m4,m5,m6,m7,m8;
+	@BeforeEach
+	public  void setUpBeforeAll() throws Exception {
 		String s1="5x^3";
 		String s2="10x^3";
 		String s4="7x^3";
@@ -56,41 +56,41 @@ class MonomJunitTest {
 			}
 		}
 	}
-	@BeforeEach
-	void setUp() throws Exception {
-	
-
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-
-
-
-	}
+//	@BeforeEach
+//	public void setUp() throws Exception {
+//	
+//
+//	}
+//
+//	@AfterEach
+//	public void tearDown() throws Exception {
+//
+//
+//
+//	}
+//
+//	@Test
+//	public void testF() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testIsZero() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testCopy() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testMonomString() {
+//		fail("Not yet implemented");
+//	}
 
 	@Test
-	void testF() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testIsZero() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testCopy() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testMonomString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testAdd() {
+	public void testAdd() {
 		System.out.println("Monom m1 before addition to m2 :");
 		System.out.println(m1.toString());System.out.println();
 		System.out.println("Monom m2 :");
@@ -104,29 +104,29 @@ class MonomJunitTest {
 		
 	}
 
-	@Test
-	void testMultipy() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testIs_proper_Monom() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testEqualsObject() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testCoefficient() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testPower() {
-		fail("Not yet implemented");
-	}
+//	@Test
+//	public void testMultipy() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testIs_proper_Monom() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testEqualsObject() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testCoefficient() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testPower() {
+//		fail("Not yet implemented");
+//	}
 
 }

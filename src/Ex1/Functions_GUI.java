@@ -145,6 +145,7 @@ public class Functions_GUI implements functions {
 		double[][] yy = new double[size][n+1];
 		double x_step = (rx.get_max()-rx.get_min())/n;
 		double x0 = rx.get_min();
+		
 		for (int i=0; i<=n; i++) {
 			x[i] = x0;
 			for(int a=0;a<size;a++) {
@@ -157,27 +158,31 @@ public class Functions_GUI implements functions {
 		StdDraw.setYscale(ry.get_min(), ry.get_max());
 
 		//y axis
-		StdDraw.line(x[n/2], ry.get_min(), x[n/2], ry.get_max());
+		StdDraw.setFont(new Font("TimesRoman", Font.BOLD, 15));
+		StdDraw.line(x[n/2]-0.03, ry.get_min(), x[n/2]-0.03, ry.get_max());
 		for (double i = ry.get_min(); i <= ry.get_max(); i=i+1) {
 			StdDraw.text(x[n/2]-0.07, i+0.07, Double.toString(i));
 		}//end y axis
 
 		//x axis
-		StdDraw.line(rx.get_min(), 0, rx.get_max(), 0); // Draw x axis
-		StdDraw.setFont(new Font("TimesRoman", Font.BOLD, 14));
-		for(int a=0;a<size;a++) {
-			for (int i = 0; i <= n; i=i+50) {
-				StdDraw.text(x[i]-0.07, -0.07, Integer.toString(i-n/2));
-			}
+		StdDraw.line(rx.get_min(), 0-0.07, rx.get_max(), 0-0.07); // Draw x axis
+		for (double i = rx.get_min(); i <= rx.get_max(); i=i+1) {
+			StdDraw.text(i-0.7 ,-0.7 , Double.toString(i));
 		}//end x axis
-
-		////////vertical lines
+		
+		
+		//vertical lines
 		StdDraw.setPenColor(Color.LIGHT_GRAY);
 		for (int i = 0; i <= n; i=i+10) {
 			StdDraw.line(x[i], ry.get_min(), x[i], ry.get_max());
 		}
-
-
+		
+		//horizontal lines
+		for (int i =(int) ry.get_min(); i <= ry.get_max(); i++) 
+		{
+			StdDraw.line(rx.get_min(), i, rx.get_max(), i);
+		}
+	
 
 		// plot the approximation to the function
 		for(int a=0;a<size;a++) {
@@ -198,7 +203,6 @@ public class Functions_GUI implements functions {
 			JsonParser jp = new JsonParser();
 			FileReader fr = new FileReader(json_file);
 			obj = jp.parse(fr);
-			//obj = new JSONParser().parse(new FileReader(fileName));
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
