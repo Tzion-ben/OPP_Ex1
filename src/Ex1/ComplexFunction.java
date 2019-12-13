@@ -180,7 +180,11 @@ public class ComplexFunction implements complex_function{
 	@Override
 	public function copy() {
 		String op=whatOperationToDo();
-		ComplexFunction ComplexFunctionToCopy=new ComplexFunction(op,this.left,this.rigth);	
+		ComplexFunction ComplexFunctionToCopy;
+		if(op=="None")
+			ComplexFunctionToCopy=new ComplexFunction(this.left);		
+		else 
+			ComplexFunctionToCopy=new ComplexFunction(op,this.left,this.rigth);	
 		return ComplexFunctionToCopy;
 	}
 
@@ -215,10 +219,16 @@ public class ComplexFunction implements complex_function{
 	@Override
 	public void plus(function f1) {
 		String op=whatOperationToDo();
-		ComplexFunction plusLR=new ComplexFunction(op,this.left,this.rigth);
-		this.left=plusLR;
-		this.rigth=f1;
-		this.operator=Operation.Plus;
+		if(op=="None") {
+			this.rigth=f1;
+			this.operator=Operation.Plus;
+		}
+		else {
+			ComplexFunction plusLR=new ComplexFunction(op,this.left,this.rigth);
+			this.left=plusLR;
+			this.rigth=f1;
+			this.operator=Operation.Plus;
+		}
 	}
 	/**
 	 *this method put the this.rigth, and this.left to the left as a ComplexFunction
@@ -227,10 +237,16 @@ public class ComplexFunction implements complex_function{
 	@Override
 	public void mul(function f1) {
 		String op=whatOperationToDo();
-		ComplexFunction mulLR=new ComplexFunction(op,this.left,this.rigth);
-		this.left=mulLR;
-		this.rigth=f1;
-		this.operator=Operation.Times;
+		if(op=="None") {
+			this.rigth=f1;
+			this.operator=Operation.Times;
+		}
+		else {
+			ComplexFunction mulLR=new ComplexFunction(op,this.left,this.rigth);
+			this.left=mulLR;
+			this.rigth=f1;
+			this.operator=Operation.Times;
+		}
 	}
 
 	/**
@@ -240,10 +256,16 @@ public class ComplexFunction implements complex_function{
 	@Override
 	public void div(function f1) {
 		String op=whatOperationToDo();
-		ComplexFunction divLR=new ComplexFunction(op,this.left,this.rigth);
-		this.left=divLR;
-		this.rigth=f1;
-		this.operator=Operation.Divid;
+		if(op=="None") {
+			this.rigth=f1;
+			this.operator=Operation.Divid;
+		}
+		else {
+			ComplexFunction divLR=new ComplexFunction(op,this.left,this.rigth);
+			this.left=divLR;
+			this.rigth=f1;
+			this.operator=Operation.Divid;
+		}
 	}
 
 	/**
@@ -253,10 +275,16 @@ public class ComplexFunction implements complex_function{
 	@Override
 	public void max(function f1) {
 		String op=whatOperationToDo();
-		ComplexFunction maxLR=new ComplexFunction(op,this.left,this.rigth);
-		this.left=maxLR;
-		this.rigth=f1;
-		this.operator=Operation.Max;
+		if(op=="None") {
+			this.rigth=f1;
+			this.operator=Operation.Max;
+		}
+		else {
+			ComplexFunction maxLR=new ComplexFunction(op,this.left,this.rigth);
+			this.left=maxLR;
+			this.rigth=f1;
+			this.operator=Operation.Max;
+		}
 	}
 
 	/**
@@ -266,10 +294,16 @@ public class ComplexFunction implements complex_function{
 	@Override
 	public void min(function f1) {
 		String op=whatOperationToDo();
-		ComplexFunction minLR=new ComplexFunction(op,this.left,this.rigth);
-		this.left=minLR;
-		this.rigth=f1;
-		this.operator=Operation.Min;
+		if(op=="None") {
+			this.rigth=f1;
+			this.operator=Operation.Min;
+		}
+		else {
+			ComplexFunction minLR=new ComplexFunction(op,this.left,this.rigth);
+			this.left=minLR;
+			this.rigth=f1;
+			this.operator=Operation.Min;
+		}
 	}
 
 	/**
@@ -279,10 +313,16 @@ public class ComplexFunction implements complex_function{
 	@Override
 	public void comp(function f1) {
 		String op=whatOperationToDo();
-		ComplexFunction compLR=new ComplexFunction(op,this.left,this.rigth);
-		this.left=compLR;
-		this.rigth=f1;
-		this.operator=Operation.Comp;
+		if(op=="None") {
+			this.rigth=f1;
+			this.operator=Operation.Comp;
+		}
+		else {
+			ComplexFunction compLR=new ComplexFunction(op,this.left,this.rigth);
+			this.left=compLR;
+			this.rigth=f1;
+			this.operator=Operation.Comp;
+		}
 	}
 
 	@Override
@@ -327,7 +367,7 @@ public class ComplexFunction implements complex_function{
 		if(op==Operation.Error)
 			throw new RuntimeException();
 		this.operator=op;
-		 
+
 	}
 	/**
 	 * a constructor just with the left Polynom, so the operation is None and the 
@@ -418,7 +458,7 @@ public class ComplexFunction implements complex_function{
 
 		return flag;
 	}
-	
+
 	//****************** Sets the functions L&R and the operation*****************
 
 	public void setLeft (function left) {

@@ -100,6 +100,9 @@ public class Polynom implements Polynom_able{
 			this.polynom.add(temp);
 			this.polynom.remove(0);
 		}
+		else if (m1.get_coefficient()==0) {
+			return;
+		}
 		else {
 			boolean flag=false;
 			flag=differentPowers(m1);
@@ -200,11 +203,15 @@ public class Polynom implements Polynom_able{
 		if(p1!=null&&(p1 instanceof Polynom_able||p1 instanceof Monom)){
 			Iterator<Monom> poly=this.polynom.listIterator();
 			Iterator<Monom> poly_able=((Polynom_able) p1).iteretor();
-			while (poly.hasNext()&&poly_able.hasNext()) {
-				Monom tempThisPoly=poly.next();
-				Monom tempAble=poly_able.next();	
-				boolean ans=tempThisPoly.equals(tempAble);
-				if(!ans) {return false;}
+			while (poly.hasNext()||poly_able.hasNext()) {
+				if(poly.hasNext()&&poly_able.hasNext()) {
+					Monom tempThisPoly=poly.next();
+					Monom tempAble=poly_able.next();	
+					boolean ans=tempThisPoly.equals(tempAble);
+					if(!ans) {return false;}
+				}
+				else//returns false because if one bigger then the other they NOT EQUAL !!!!!!
+					return false;
 			}
 		}
 		return flag;
@@ -294,10 +301,9 @@ public class Polynom implements Polynom_able{
 		int sizeOfThis=this.polynom.size();
 		for(int i=0;i<sizeOfThis;i++) {
 			Monom temp=this.polynom.get(0).derivative();
-			if(temp.equals(zeroMonom)) {
+			if(temp.equals(zeroMonom)) 
 				this.polynom.remove(0);
-				this.polynom.add(temp);
-			}
+
 			else {	
 				this.polynom.add(temp);
 				this.polynom.remove(0);
@@ -327,11 +333,13 @@ public class Polynom implements Polynom_able{
 			ans+=areaPo;
 		double xPrime=x0+eps;
 		while(xPrime<x1) {
+
 			areaPo=areaPo+(f(xPrime)*eps);
 			xPrime+=eps;
 		}
-		ans+=areaPo;
-		return Math.abs(ans);//return a positive value because an area is can not
+		if(areaPo>0)//only abode the x axis
+			ans+=areaPo;
+		return ans;//return a positive value because of the area 
 		//be negative
 	}
 	/**
@@ -347,10 +355,18 @@ public class Polynom implements Polynom_able{
 	 * method from the monom
 	 */
 	public void multiply(Monom m1) {
-		Iterator<Monom> poly=this.polynom.listIterator();
-		while (poly.hasNext()) {
-			Monom temp=poly.next();
-			temp.multipy(m1);
+		if(m1.isZero()) {
+			this.polynom.removeAll(polynom);
+			this.polynom.add(m1);
+		}//if the monom that i will multiply the polynom by it is equal to 
+		//zero then remuve all tnd put the zero monom at the polynom 
+		//and thats it
+		else {
+			Iterator<Monom> poly=this.polynom.listIterator();
+			while (poly.hasNext()) {
+				Monom temp=poly.next();
+				temp.multipy(m1);
+			}
 		}
 	}//end multiply
 	/**
@@ -378,7 +394,7 @@ public class Polynom implements Polynom_able{
 		}
 		return ans;
 	}
-	
+
 	@Override
 	public function initFromString(String s) {
 		function polynomFunction=new Polynom(s);
