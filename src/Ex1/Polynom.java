@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import Ex1.Monom;
+import Ex1.Monom_Comperator;
 /**
  * This class represents a Polynom with add, multiply functionality, it also should support the following:
  * 1. Riemann's Integral: https://en.wikipedia.org/wiki/Riemann_integral
@@ -14,8 +15,7 @@ import Ex1.Monom;
  *
 
 /**
- * I chose to work with hashMap because every key is unique and i will search for the coefficient
- * by the key, if the polynom have the same key i will make a addition between them  
+ * I chose to work with ArrayList to represrnt my Polynom
  * @author Tzion
  *
  */
@@ -94,12 +94,17 @@ public class Polynom implements Polynom_able{
 	public void add(Monom m1) {
 		if(this.polynom.size()==1 && this.polynom.get(0).get_coefficient()==0) {
 			boolean foo=differentPowers(m1);
+			int powert=m1.get_power();
+			double coefft=m1.get_coefficient();
+			Monom temp=new Monom (coefft,powert);
+			this.polynom.add(temp);
+			this.polynom.remove(0);
 		}
 		else {
 			boolean flag=false;
 			flag=differentPowers(m1);
 			if(!flag)
-				this.polynom.add(m1);
+				this.polynom.add(new Monom(m1));
 			Collections.sort(this.polynom,new Monom_Comperator());
 		}
 	}
@@ -192,7 +197,7 @@ public class Polynom implements Polynom_able{
 	@Override
 	public boolean equals(Object p1) {
 		boolean flag=true;
-		if(p1!=null&&p1 instanceof Polynom_able){
+		if(p1!=null&&(p1 instanceof Polynom_able||p1 instanceof Monom)){
 			Iterator<Monom> poly=this.polynom.listIterator();
 			Iterator<Monom> poly_able=((Polynom_able) p1).iteretor();
 			while (poly.hasNext()&&poly_able.hasNext()) {
@@ -322,7 +327,6 @@ public class Polynom implements Polynom_able{
 			ans+=areaPo;
 		double xPrime=x0+eps;
 		while(xPrime<x1) {
-
 			areaPo=areaPo+(f(xPrime)*eps);
 			xPrime+=eps;
 		}

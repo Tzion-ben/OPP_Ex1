@@ -3,13 +3,10 @@ package Ex1;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -91,7 +88,10 @@ public class Functions_GUI implements functions {
 
 	//end of regular collections functions
 
-
+	/**
+	 * this method is reading the functions from the file to the functionList and work on
+	 * them
+	 */
 	@Override
 	public void initFromFile(String file) throws IOException {
 		set_functionsList();
@@ -121,6 +121,9 @@ public class Functions_GUI implements functions {
 		}
 	}
 
+	/**
+	 * this method saving to the giving file the all functions from the functionList
+	 */
 	@Override
 	public void saveToFile(String file) throws IOException {
 		FileWriter functions = new FileWriter(file);  
@@ -131,8 +134,14 @@ public class Functions_GUI implements functions {
 		outPutFunctions.close();
 		functions.close();
 	}
+
+	//this static array is for the colors to draw the functions at the GUI
 	public static Color[] Colors = {Color.blue, Color.cyan, Color.MAGENTA, Color.ORANGE, 
 			Color.red, Color.GREEN, Color.PINK};
+	/**
+	 * this method is drawing the functions in the gui by paramiters that it's gut of 
+	 * the canvas , resolution and the range of x axis and y axis
+	 */
 	@Override
 	public void drawFunctions(int width, int height, Range rx, Range ry, int resolution) {
 		int n = resolution;
@@ -145,7 +154,7 @@ public class Functions_GUI implements functions {
 		double[][] yy = new double[size][n+1];
 		double x_step = (rx.get_max()-rx.get_min())/n;
 		double x0 = rx.get_min();
-		
+
 		for (int i=0; i<=n; i++) {
 			x[i] = x0;
 			for(int a=0;a<size;a++) {
@@ -169,20 +178,20 @@ public class Functions_GUI implements functions {
 		for (double i = rx.get_min(); i <= rx.get_max(); i=i+1) {
 			StdDraw.text(i-0.7 ,-0.7 , Double.toString(i));
 		}//end x axis
-		
-		
+
+
 		//vertical lines
 		StdDraw.setPenColor(Color.LIGHT_GRAY);
 		for (int i = 0; i <= n; i=i+10) {
 			StdDraw.line(x[i], ry.get_min(), x[i], ry.get_max());
 		}
-		
+
 		//horizontal lines
 		for (int i =(int) ry.get_min(); i <= ry.get_max(); i++) 
 		{
 			StdDraw.line(rx.get_min(), i, rx.get_max(), i);
 		}
-	
+
 
 		// plot the approximation to the function
 		for(int a=0;a<size;a++) {
@@ -196,6 +205,9 @@ public class Functions_GUI implements functions {
 		}			
 	}
 
+	/**
+	 *this method gut a json file and convert his parameters to the GUI for the functions 
+	 */
 	@Override
 	public void drawFunctions(String json_file) {
 		Object obj = null;
@@ -203,43 +215,48 @@ public class Functions_GUI implements functions {
 			JsonParser jp = new JsonParser();
 			FileReader fr = new FileReader(json_file);
 			obj = jp.parse(fr);
+
+
+			JsonObject jo = (JsonObject) obj;
+
+			// getting firstName and lastName 
+			JsonElement WidthJson =  jo.get("Width");
+			int width=WidthJson.getAsInt();
+
+			JsonElement HeightJson =  jo.get("Height");
+			int height=HeightJson.getAsInt();
+
+			JsonElement ResolutionJson =  jo.get("Resolution");
+			int resolution=ResolutionJson.getAsInt();
+
+
+			JsonElement ryJson =  jo.get("Range_Y");
+			JsonArray ry=ryJson.getAsJsonArray();
+			JsonElement minRyJson=ry.get(0);
+			JsonElement maxRyJson=ry.get(1);
+			double ryMin=minRyJson.getAsDouble();
+			double ryMax=maxRyJson.getAsDouble();
+			Range ryRange=new Range(ryMin, ryMax);
+
+			JsonElement rxJson =  jo.get("Range_X");
+			JsonArray rx=rxJson.getAsJsonArray();
+			JsonElement minRxJson=rx.get(0);
+			JsonElement maxRxJson=rx.get(1);
+			double rxMin=minRxJson.getAsDouble();
+			double rxMax=maxRxJson.getAsDouble();
+			Range rxRange=new Range(rxMin, rxMax);
+
+
+			//sending the paramiters to the 
+			drawFunctions(width, height, rxRange, ryRange, resolution);
+		}
+		catch (Exception e) {//if the file is not found it goes here
+			System.out.println("The file is not found SO it print by use default values");
+			int width=1000, height=600, resolution=200;
+			Range rx = new Range(-10,10);
+			Range ry = new Range(-5,15);
+			drawFunctions(width, height, rx, ry, resolution);
 		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		} 
-		JsonObject jo = (JsonObject) obj;
-
-		// getting firstName and lastName 
-		JsonElement WidthJson =  jo.get("Width");
-		int width=WidthJson.getAsInt();
-
-		JsonElement HeightJson =  jo.get("Height");
-		int height=HeightJson.getAsInt();
-
-		JsonElement ResolutionJson =  jo.get("Resolution");
-		int resolution=ResolutionJson.getAsInt();
-
-
-		JsonElement ryJson =  jo.get("Range_Y");
-		JsonArray ry=ryJson.getAsJsonArray();
-		JsonElement minRyJson=ry.get(0);
-		JsonElement maxRyJson=ry.get(1);
-		double ryMin=minRyJson.getAsDouble();
-		double ryMax=maxRyJson.getAsDouble();
-		Range ryRange=new Range(ryMin, ryMax);
-
-		JsonElement rxJson =  jo.get("Range_X");
-		JsonArray rx=rxJson.getAsJsonArray();
-		JsonElement minRxJson=rx.get(0);
-		JsonElement maxRxJson=rx.get(1);
-		double rxMin=minRxJson.getAsDouble();
-		double rxMax=maxRxJson.getAsDouble();
-		Range rxRange=new Range(rxMin, rxMax);
-
-
-		//sending the paramiters to the 
-		drawFunctions(width, height, rxRange, ryRange, resolution);
-
 	}
 
 	// ***************** My functions **********************
