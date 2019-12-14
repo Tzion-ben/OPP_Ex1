@@ -72,7 +72,17 @@ class PolynomTest {
 		String notExpectP2="51x^3+8x^5+6";
 		Polynom notExpectPoly2=new Polynom(notExpectP2);
 		assertEquals(expectPoly2, p2);
-		assertNotEquals(notExpectPoly2, p1);	
+		assertNotEquals(notExpectPoly2, p1);
+		
+		Monom m4=new Monom(0,0);
+		Polynom p3=new Polynom();
+		p3.add(m4);
+		assertEquals(p3, p3);
+		
+		Polynom p4=new Polynom("5x^4+6x^2");
+		p4.add(m4);
+		assertEquals(p4, p4);
+
 	}
 
 	@Test

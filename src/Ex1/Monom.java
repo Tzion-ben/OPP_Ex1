@@ -63,7 +63,7 @@ public class Monom implements function{
 	public boolean isZero() {return this.get_coefficient() == 0;}
 
 	/**
-	 * this method gets the string and return's monom object from type function
+	 * this method gets the string and return's monom object from type function  
 	 */
 	@Override
 	public function initFromString(String s) {
