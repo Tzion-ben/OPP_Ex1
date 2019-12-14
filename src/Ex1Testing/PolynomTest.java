@@ -129,7 +129,7 @@ class PolynomTest {
 	@Test
 	void testRoot() {
 
-		double[] roots = {0.2135162353515625,0.83334350585975}; 
+		double[] roots = {0.2135162353515625,0.833343505859375}; 
 
 		String s1="-6x^3+3x^2+9x-2";
 		Polynom p1=new Polynom(s1);
@@ -139,8 +139,8 @@ class PolynomTest {
 
 		String s2="6x-5";
 		Polynom p2=new Polynom(s2);
-		double rootP2=(p1.root(0, 1, 0.0001));	
-		if(rootP1!=roots[0])
+		double rootP2=(p2.root(0, 1, 0.0001));	
+		if(rootP2!=roots[1])
 			fail("");	
 	}
 	@Test
@@ -187,7 +187,7 @@ class PolynomTest {
 		
 
 		String s2="6x-5";
-		Polynom p2=new Polynom(s1);
+		Polynom p2=new Polynom(s2);
 		double areaP2=(p2.area(-1, 0, 0.0001));
 		if(areaP2!=0)
 			fail("");		
@@ -197,8 +197,6 @@ class PolynomTest {
 	void testMultiplyMonom() {
 		String s1="74x^3+5x^5+6";
 		Polynom p1=new Polynom(s1);	
-		String s2="4x^3+5x^5";
-		Polynom p2=new Polynom(s2);		
 		p1.multiply(new Monom(5, 7));;
 		String expectMul="370x^10+25x^12+30x^7";
 		Polynom expected1=new Polynom(expectMul);
