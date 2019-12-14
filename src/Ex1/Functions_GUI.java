@@ -1,4 +1,13 @@
 package Ex1;
+/**
+ *This class drawing a Coordinate system of a giving functions , it also support a 3 other 
+ *operations and they: read functions from a file to functions collection and draw them, save functions to file
+ *from the functions collection, and drawing the functions with a parameters for the GUI from
+ *JSON file.
+ * 
+ * @author Tzion
+ * 
+ */
 
 import java.awt.Color;
 import java.awt.Font;
