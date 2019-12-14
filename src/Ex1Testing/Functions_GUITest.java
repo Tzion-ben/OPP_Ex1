@@ -1,7 +1,10 @@
 package Ex1Testing;
 
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.Iterator;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -94,8 +97,28 @@ class Functions_GUITest {
 	@Test
 	void testSaveToFile() {
 		String file2 = "function_file2.txt";
+		String file3 = "function_file3.txt";
+
+
 		try {
 			ans.saveToFile(file2);
+			ans.saveToFile(file3);
+			FileReader file2_read = new FileReader(file2);
+			FileReader file3_read = new FileReader(file3);
+			BufferedReader brFile2 = new BufferedReader(file2_read); 
+			BufferedReader brFile3= new BufferedReader(file3_read); 
+
+			String readFile2;
+			String readFile3;
+			readFile2=brFile2.readLine();
+			readFile3=brFile3.readLine();
+			int i=0;
+			while(readFile2!=null&&readFile3!=null) {
+				if(!readFile2.equals(readFile3))
+					fail();	
+				readFile2=brFile2.readLine();
+				readFile3=brFile3.readLine();
+			}
 		}
 		catch (Exception e) {
 			fail();	
