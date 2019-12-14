@@ -46,6 +46,7 @@ public class MonomTest {
 		m1.add(m2);//add m2 to m1 
 		if(copyM1.equals(m1)) {//if the cope of m1 was equal to m2 it is was not good 
 			//because it is change the function after the copy
+			fail("");
 		}
 	}
 
