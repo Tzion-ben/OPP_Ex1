@@ -233,6 +233,9 @@ class PolynomTest {
 
 	@Test
 	void testInitFromString() {
+		System.out.println();
+		System.out.println("Bad exampels on Polynoms :");
+		System.out.println();
 		String []  badStringsForPolynoms= {"8x^2+5x-5x^v4","8x^2+5x+","6^x56k+95x^2+6",
 				"8x^100+k8x^5","8x7+6x^3","8x87^87+6x^5","85cx^7+6x^3"};
 		for(int i=0;i<badStringsForPolynoms.length;i++) {

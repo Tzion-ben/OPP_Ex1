@@ -131,7 +131,8 @@ public class Functions_GUI implements functions {
 	}
 
 	/**
-	 * this method saving to the giving file the all functions from the functionList
+	 * this method is create a txt file and saving file the all functions from
+	 * the functionList
 	 */
 	@Override
 	public void saveToFile(String file) throws IOException {
@@ -209,7 +210,9 @@ public class Functions_GUI implements functions {
 	}
 
 	/**
-	 *this method gut a json file and convert his parameters to the GUI for the functions 
+	 *this method is drawing the functions from the arrayList in the GUI by
+	 * parameters that it's gut from JSOM file, and if the file was worng or not exist
+	 * it will drawing with some default parameters. 
 	 */
 	@Override
 	public void drawFunctions(String json_file) {

@@ -39,7 +39,12 @@ class ComplexFunctionText {
 		ComplexFunction cf1 = new ComplexFunction("plus", p1,p2);
 		function cf2 =cf1.initFromString(s3);
 		assertEquals(cf1, cf2);
-
+		try {
+			ComplexFunction cf10=new ComplexFunction("dfv", p1, p2);
+		}
+		catch (Exception e) {
+			//in Incurrect oparation
+		}
 
 		String s4 = "3.1+2.4x^2-x^4+9x+6x^2";
 		function p4 = new Polynom(s4);

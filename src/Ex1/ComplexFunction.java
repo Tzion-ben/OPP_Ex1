@@ -9,7 +9,6 @@ package Ex1;
  *
  */
 
-
 public class ComplexFunction implements complex_function{
 	/**  
 	 * this method will calculate the f of the complex function at x that
@@ -199,12 +198,12 @@ public class ComplexFunction implements complex_function{
 	}
 
 	/**
-	 * this methos is checkimg if two Complec Functions are equal or not
-	 * at range -2000 to 2000 because we can't make a comparison between toe complex function 
-	 * we not have a way to compare something like for example x^2/x and x, so i compare 
-	 * the f(x) of the two Complex Functions , but we can't say that thay realy equal because 
-	 * we need to compare all the numbers until infinity and it's effective, so we compare
-	 * a some range and for that range they equal
+	 * This method is checking if two Complex Functions are equal or not at range -2000 to 2000
+	 *  because we can't make a comparison between two complex function because we not have a way
+	 *  to compare something like for example x^2/x and x, so i compare  the f(x) of the two 
+	 *  Complex Functions , but we can't say that thay realy equal because  we need to compare
+	 *  all the numbers until infinity and it's not effective,
+	 *  so we compare a some range and for that range ONLY they equal.
 	 */
 	public boolean equals(Object cf) {
 		boolean flag=true;
@@ -445,7 +444,7 @@ public class ComplexFunction implements complex_function{
 	}
 
 	/**
-	 * this method checking if the number of scopes at the string us correct, 
+	 * this method checking if the number of scopes at the string is correct, 
 	 * and if it's does so return the place of the last close scoop
 	 * and if not returns -1
 	 * @param s

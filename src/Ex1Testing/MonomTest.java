@@ -24,10 +24,9 @@ public class MonomTest {
 		String s1 ="0";
 		Monom m1=new Monom(s1);
 		Monom expcted=new Monom(0.0,0);
-		if(m1.equals(expcted))
-			System.out.println("IsZero works well");
-		else
-			fail("Is zero methos is worng !");
+		if(!m1.equals(expcted))
+			fail("");
+		
 
 		//if it is bad 
 		String s2 ="110x^5";
@@ -35,8 +34,6 @@ public class MonomTest {
 		Monom unExpcted=new Monom(0.0,0);
 		if(m2.equals(unExpcted))
 			fail("Is zero methos is worng !");	
-		else
-			System.out.println("IsZero works well");
 	}
 
 	@Test
@@ -49,12 +46,6 @@ public class MonomTest {
 		m1.add(m2);//add m2 to m1 
 		if(copyM1.equals(m1)) {//if the cope of m1 was equal to m2 it is was not good 
 			//because it is change the function after the copy
-			fail("Fail at deep cope !");
-
-			System.out.println("Deep cope is well");}
-		else {
-			System.out.println("Deep cope is well");
-			System.out.println();
 		}
 	}
 
@@ -188,12 +179,17 @@ public class MonomTest {
 	@Test
 	public void testToString() {
 		//good examples
+		System.out.println();
+		System.out.println("Good exampels of Monoms :");
+		System.out.println();
 		String[] goodMonoms = {"2x", "-x^5","-3.2x^2","0","6x^3","7x","3x^9"};
 		for(int i=0;i<goodMonoms.length;i++) {
 			Monom m = new Monom(goodMonoms[i]);
 			System.out.println("The monom m"+i+" is: "+m.toString()); 
 		}
 
+		System.out.println("Bad exampels of Monoms :");
+		System.out.println();
 		String[] badMonoms = {"2x^", "-x^5+","-3.2ghx^2","ua0","6x54^3","-9^7x","35bvx^9"};
 		for(int i=0;i<badMonoms.length;i++) {
 			try {

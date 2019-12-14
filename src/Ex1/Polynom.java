@@ -468,8 +468,8 @@ public class Polynom implements Polynom_able{
 	}
 	/**
 	 * this method cheking if the polynom have the same powers with different 
-	 * coefficients then merge them and return's true and if there is no monom with
-	 * the same power at ths polynom is's return's false
+	 * coefficients then merge them and return's true, and if there is no monom with
+	 * the same power at this polynom is's return's false
 	 * @param mo
 	 */
 	public boolean differentPowers (Monom mo) {
@@ -505,5 +505,4 @@ public class Polynom implements Polynom_able{
 
 	private ArrayList<Monom> polynom;//ArrayList that represents rhe polynom 
 	//that every place in it is a monom
-
 }
