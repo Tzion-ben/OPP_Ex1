@@ -11,7 +11,7 @@ import Ex1.Monom_Comperator;
  * 2. Finding a numerical value between two values (currently support root only f(x)=0).
  * 3. Derivative
  * 
- * @author Boaz
+ * @author Tzion
  *
 
 /**
@@ -176,7 +176,6 @@ public class Polynom implements Polynom_able{
 				this.polynom.get(lastPosition-1).multipy(poly_able.next());
 			}
 			this.polynom.remove(0);
-			//boolean flag=differentPowers(this.polynom.get(i));
 		}//end 1.
 		//2.
 		sizeOfThis=this.polynom.size();
@@ -394,7 +393,10 @@ public class Polynom implements Polynom_able{
 		}
 		return ans;
 	}
-
+	
+	/**
+	 *this method init a polynom as a function from a string 
+	 */
 	@Override
 	public function initFromString(String s) {
 		function polynomFunction=new Polynom(s);

@@ -1,4 +1,14 @@
 package Ex1;
+/**
+ * This class make the following operations: addition, subtracting , multiplying, finding the maximum
+ * function between the functions the maximum deepened on the of the operation of the specific 
+ * function , the same way for the minimum, and the last oparation it's a composition between 
+ * the functions.
+ * This class is based on the Monom and Polynom classes
+ * @author Tzion
+ *
+ */
+
 
 public class ComplexFunction implements complex_function{
 	/**  
@@ -10,7 +20,7 @@ public class ComplexFunction implements complex_function{
 	public double f(double x) {
 		double leftSide;
 		double rigthSide;
-		double sumOfOperation=0;;
+		double sumOfOperation=0;
 
 		switch (this.operator) {
 		case Plus:

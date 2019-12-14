@@ -6,7 +6,7 @@ import java.util.Comparator;
  * This class represents a simple "Monom" of shape a*x^b, where a is a real number and b is an integer (summed a none negative), 
  * see: https://en.wikipedia.org/wiki/Monomial 
  * The class implements function and support simple operations as: construction, value at x, derivative, add and multiply. 
- * @author Boaz
+ * @author Tzion
  *
  */
 public class Monom implements function{
@@ -206,6 +206,7 @@ public class Monom implements function{
 		
 		}
 	}//end add
+	
 	/**
 	 * this method will do a multiply be the lows of math:
 	 * 1. between the coefficients I will multiply
