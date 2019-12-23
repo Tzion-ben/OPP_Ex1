@@ -1,5 +1,4 @@
-# My Functions - OPP_EX1
-This repository include all source files of Ex_1
+# My Functions
 
 This project is about drawing a functions at the GUI.
 It includes many class but the most important is the following:
