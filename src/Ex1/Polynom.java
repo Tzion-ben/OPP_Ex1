@@ -213,6 +213,8 @@ public class Polynom implements Polynom_able{
 					return false;
 			}
 		}
+		else 
+			return false;
 		return flag;
 
 	}
