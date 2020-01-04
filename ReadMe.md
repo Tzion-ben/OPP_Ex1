@@ -25,4 +25,4 @@ This class drawing a Coordinate System of a giving functions , it also support a
 operations and they: read functions from a file to functions collection and draw them, save functions to file
 from the functions collection, and drawing the functions with a parameters for the GUI from JSON file.
  
-*To more information go to the WiKi page of the Progect*
+*To more information go to the WiKi page of the Project*
