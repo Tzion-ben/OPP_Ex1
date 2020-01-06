@@ -213,8 +213,7 @@ public class Polynom implements Polynom_able{
 					return false;
 			}
 		}
-		else 
-			return false;
+
 		return flag;
 
 	}
@@ -395,7 +394,7 @@ public class Polynom implements Polynom_able{
 		}
 		return ans;
 	}
-	
+
 	/**
 	 *this method init a polynom as a function from a string 
 	 */
